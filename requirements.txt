@@ -15,3 +15,5 @@ ogb
 ray
 torch_scatter
 torch_sparse
+torchvision==0.17.0
+ huggingface_hub==0.19.4
