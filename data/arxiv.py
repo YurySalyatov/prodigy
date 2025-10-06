@@ -118,10 +118,10 @@ def preprocess_arxiv_text_bert(root, model_name, device):
     original_load = torch.load
     torch.load = lambda *args, **kwargs: original_load(*args, **{**kwargs, 'weights_only': False})
 
-    try:
-        dataset = PygNodePropPredDataset("ogbn-arxiv", root=root)
-    finally:
-        torch.load = original_load
+    # try:
+    dataset = PygNodePropPredDataset("ogbn-arxiv", root=root)
+    # finally:
+    #     torch.load = original_load
     graph = dataset[0]
     print(graph)
     nodeidx2paperid = pd.read_csv(os.path.join(root, 'ogbn_arxiv', 'mapping', 'nodeidx2paperid.csv.gz'), index_col='node idx')
