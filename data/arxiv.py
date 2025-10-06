@@ -113,9 +113,17 @@ def get_arxiv_dataloader(dataset, split, node_split, batch_size, n_way, n_shot, 
 
 def preprocess_arxiv_text_bert(root, model_name, device):
     print("Preprocessing text features")
-    dataset = PygNodePropPredDataset("ogbn-arxiv", root=root)
-    graph = dataset[0]
 
+    import torch
+    original_load = torch.load
+    torch.load = lambda *args, **kwargs: original_load(*args, **{**kwargs, 'weights_only': False})
+
+    try:
+        dataset = PygNodePropPredDataset("ogbn-arxiv", root=root)
+    finally:
+        torch.load = original_load
+    graph = dataset[0]
+    print(graph)
     nodeidx2paperid = pd.read_csv(os.path.join(root, 'ogbn_arxiv', 'mapping', 'nodeidx2paperid.csv.gz'), index_col='node idx')
     titleabs_url = "https://snap.stanford.edu/ogb/data/misc/ogbn_arxiv/titleabs.tsv"
     titleabs = pd.read_csv(titleabs_url, sep='\t', names=['paper id', 'title', 'abstract'], index_col='paper id')
