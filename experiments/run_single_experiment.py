@@ -19,6 +19,10 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
+import torch
+original_load = torch.load
+torch.load = lambda *args, **kwargs: original_load(*args, **{**kwargs, 'weights_only': False})
+
 if __name__ == '__main__':
     torch.set_num_threads(4)
 
