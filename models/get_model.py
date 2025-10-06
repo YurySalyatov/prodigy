@@ -10,6 +10,7 @@ import pickle
 import wandb
 import sys
 import os
+os.environ["WANDB_MODE"] = "disabled"
 
 sys.path.extend(os.path.join(os.path.dirname(__file__), "../"))
 
