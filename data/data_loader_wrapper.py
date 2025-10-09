@@ -28,5 +28,8 @@ def get_dataset_wrap(root, dataset, **kwargs):
     elif dataset in ["NELL", "FB15K-237", "ConceptNet"]:
         from data.kg import get_kg_dataset
         return get_kg_dataset(root=root, name=dataset, **kwargs)
+    elif dataset == "aminer":
+        from data.get_kg_aminer import get_aminer_dataset
+        return get_aminer_dataset(root=os.path.join(root, 'aminer'), **kwargs)
     else:
         raise NotImplementedError
